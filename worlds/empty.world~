@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+  <world name="default">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    
+    <include>
+      <uri>model://HR-OS1</uri>
+      <plugin name="hros1_control" filename="hros1_control_plugin.so"/>
+    </include>
+
+    <!-- reference to your plugin -->
+    
+  </world>
+</sdf>

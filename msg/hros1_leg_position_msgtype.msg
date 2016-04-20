@@ -1,0 +1,13 @@
+Header header
+float left_leg_hip_yaw
+float left_leg_hip_roll
+float left_leg_hip_pitch
+float left_leg_knee_pitch
+float left_leg_ankle_pitch
+float left_leg_ankle_roll
+float right_leg_hip_yaw
+float right_leg_hip_roll
+float right_leg_hip_pitch
+float right_leg_knee_pitch
+float right_leg_ankle_pitch
+float right_leg_ankle_roll

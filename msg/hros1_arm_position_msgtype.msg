@@ -1,0 +1,7 @@
+Header header
+float left_arm_shoulder_pitch
+float left_arm_Shoulder_roll
+float left_arm_elbow_pitch
+float right_arm_shoulder_pitch
+float right_arm_Shoulder_roll
+float right_arm_elbow_pitch

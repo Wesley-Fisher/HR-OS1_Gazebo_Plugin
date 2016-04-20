@@ -1,0 +1,120 @@
+/*********************************************************************
+ * Software License Agreement (BSD License)
+ *
+ *  Copyright (c) 2013, Open Source Robotics Foundation
+ *  All rights reserved.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *   * Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *   * Redistributions in binary form must reproduce the above
+ *     copyright notice, this list of conditions and the following
+ *     disclaimer in the documentation and/or other materials provided
+ *     with the distribution.
+ *   * Neither the name of the Open Source Robotics Foundation
+ *     nor the names of its contributors may be
+ *     used to endorse or promote products derived
+ *     from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ *  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ *  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ *  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ *  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ *  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ *  POSSIBILITY OF SUCH DAMAGE.
+ *********************************************************************/
+
+/**
+ *  \author Dave Coleman
+ *  \desc   Example ROS plugin for Gazebo
+ */
+ 
+// TODO: Set up a ros node
+//   subscribe to messages
+//   make a set of joints
+//   set up an object for the joint controller
+//   set up code to apply forces on joints
+
+#include <gazebo_plugins/gazebo_ros_template.h>
+#include <gazebo/common/Plugin.hh>
+#include <gazebo/physics/PhysicsTypes.hh>
+#include <ros/ros.h>
+
+#include <ostream>
+#include <vector>
+
+typedef boost::shared_ptr<gazebo::physics::Joint> JointPtr;
+
+using namespace std;
+
+namespace gazebo
+{
+
+class HROS1_Control_Plugin : public ModelPlugin
+{
+
+// Constructor
+public:
+////////////////////////////////////////////////////////////////////////////////
+HROS1_Control_Plugin() : ModelPlugin()
+{
+  cout << "Plugin Started" << endl;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Destructor
+HROS1_Control_Plugin::~HROS1_Control_Plugin()
+{
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Load the controller
+void Load( physics::ModelPtr _parent, sdf::ElementPtr _sdf )
+{
+  // Make sure the ROS node for Gazebo has already been initalized
+  if (!ros::isInitialized())
+  {
+    ROS_FATAL_STREAM("A ROS node for Gazebo has not been initialized, unable to load plugin. "
+      << "Load the Gazebo system plugin 'libgazebo_ros_api_plugin.so' in the gazebo_ros package)");
+    //return;
+  }
+  
+  // Do some quick research into how to find hte joints
+  int num = _parent->GetJointCount();
+  cout << "Number of joints: " << num << endl;
+  
+  std::vector<JointPtr> joints = _parent->GetJoints();
+  int size = joints.size();
+  for (int i = 0; i < size; i++)
+  {
+    std::string s = joints[i]->GetName();
+    cout << s << endl;
+  }
+  cout << endl << endl;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Update the controller
+void UpdateChild()
+{
+}
+
+void OnUpdate()
+{
+}
+
+
+};
+
+// Register this plugin with the simulator
+GZ_REGISTER_MODEL_PLUGIN(HROS1_Control_Plugin);
+}
